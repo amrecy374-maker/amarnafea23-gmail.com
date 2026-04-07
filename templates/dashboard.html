@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body style="background:#111;color:white;text-align:center">
+<h1>Dashboard</h1>
+<input id="sid" placeholder="Student ID"><br>
+<input id="spass" placeholder="Password"><br>
+<button onclick="add()">Add</button>
+
+<ul id="list"></ul>
+
+<script>
+async function load(){
+ let r=await fetch('/accounts'); let d=await r.json();
+ list.innerHTML="";
+ d.forEach(a=>{list.innerHTML+=`<li>${a.student_id}</li>`});
+}
+async function add(){
+ await fetch('/add_account',{method:'POST',headers:{'Content-Type':'application/json'},
+ body:JSON.stringify({student_id:sid.value,password:spass.value})});
+ load();
+}
+load();
+</script>
+</body>
+</html>
