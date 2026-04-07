@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><title>ELMODMEN HOST</title></head>
+<body style="background:black;color:white;text-align:center">
+<h2>ELMODMEN HOST</h2>
+<input id="user" placeholder="Username"><br>
+<input id="pass" type="password" placeholder="Password"><br>
+<button onclick="register()">Register</button>
+<button onclick="login()">Login</button>
+<p id="msg"></p>
+
+<script>
+async function register(){
+ let r=await fetch('/register',{method:'POST',headers:{'Content-Type':'application/json'},
+ body:JSON.stringify({username:user.value,password:pass.value})});
+ let d=await r.json(); msg.innerText=d.message||d.error;
+}
+async function login(){
+ let r=await fetch('/login',{method:'POST',headers:{'Content-Type':'application/json'},
+ body:JSON.stringify({username:user.value,password:pass.value})});
+ let d=await r.json(); msg.innerText=d.message||d.error;
+ if(d.message){window.location='/dashboard'}
+}
+</script>
+</body>
+</html>
